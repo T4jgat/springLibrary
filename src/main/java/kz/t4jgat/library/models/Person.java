@@ -1,18 +1,19 @@
 package kz.t4jgat.library.models;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import jakarta.validation.constraints.*;
 
 public class Person {
     private int id;
-    @NotNull(message = "Имя не может быть пустым")
-    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z]\\w+", message = "ФИО должно быть вида: Фамилия Имя Отчество")
+    @NotEmpty(message = "Имя не может быть пустым")
     private String name;
-
+    @NotNull(message = "Дата рождения обязательна!")
+//    @Pattern(regexp = "0[1-9]|1[012]", message = "Wrong format!")
+    @Min(value = 1900, message = "Такие люди больше не живут!")
+    @Max(value = 2023, message = "Такой год ещё не наступил!")
     private int birth_year;
+
+    public Person() {
+    }
 
     public Person(int id, String name, int birth_year) {
         this.id = id;
