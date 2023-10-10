@@ -55,6 +55,7 @@ public class SpringConfig implements WebMvcConfigurer {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
+        resolver.setCharacterEncoding("UTF-8");
     }
 
     @Bean
