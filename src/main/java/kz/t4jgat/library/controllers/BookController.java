@@ -1,21 +1,22 @@
 package kz.t4jgat.library.controllers;
 
 import kz.t4jgat.library.DAO.BookDAO;
+import kz.t4jgat.library.DAO.PersonDAO;
 import kz.t4jgat.library.models.Book;
+import kz.t4jgat.library.models.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
-    public BookController(BookDAO bookDAO) {
+    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping

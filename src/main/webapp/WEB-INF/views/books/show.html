@@ -10,6 +10,8 @@
     <p th:text="${book.getAuthor_name()}"></p>
     <p th:text="${book.getYear()}"></p>
 
+    <br>
+
     <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
         <input type="submit" value="Удалить книгу">
     </form>

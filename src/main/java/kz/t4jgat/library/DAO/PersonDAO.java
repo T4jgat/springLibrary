@@ -1,5 +1,6 @@
 package kz.t4jgat.library.DAO;
 
+import kz.t4jgat.library.models.Book;
 import kz.t4jgat.library.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -37,5 +38,9 @@ public class PersonDAO {
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM person WHERE id=?", id);
+    }
+
+    public List<Book> takenBooks(int id){
+        return jdbcTemplate.query("SELECT * FROM book WHERE person_id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Book.class));
     }
 }
