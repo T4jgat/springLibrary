@@ -2,11 +2,14 @@ package kz.t4jgat.library.controllers;
 
 import jakarta.validation.Valid;
 import kz.t4jgat.library.DAO.PersonDAO;
+import kz.t4jgat.library.models.Book;
 import kz.t4jgat.library.models.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/people")
@@ -25,8 +28,8 @@ public class PeopleController {
 
     @GetMapping("{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        Person person = personDAO.show(id);
-        model.addAttribute("person", person);
+        model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("books", personDAO.takenBooks(id));
         return "people/show";
     }
 

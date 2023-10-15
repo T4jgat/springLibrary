@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title th:text="${person.getName()}"></title>
@@ -9,6 +8,18 @@
     <h1 th:text="${person.getName()}"></h1>
     <h1 th:text="${person.getBirth_year()}"></h1>
     <a href="/people">Назад</a>
+
+    <hr>
+    <div th:if="${#lists.isEmpty(books)}">
+        <b>Человек не взял ни одной книги</b>
+    </div>
+    <div th:if="${not #lists.isEmpty(books)}" >
+        <b>Книги:</b>
+        <div th:each="book, iter : ${books}">
+            <p th:text="${iter.count} + '. ' + ${book.getName()}"></p>
+        </div>
+    </div>
+    <hr>
     <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать</a>
 
     <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
