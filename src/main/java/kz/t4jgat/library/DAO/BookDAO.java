@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BookDAO {
@@ -29,8 +30,27 @@ public class BookDAO {
         jdbcTemplate.update("DELETE FROM book WHERE id=?", id);
     }
 
-//    public Person personTookBook(int id) {
-//        return jdbcTemplate.query("SELECT p.id, p.name, p.birth_year from book join public.person p on p.id = book.person_id WHERE book.id=?", new Object[]{id},
-//                new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
-//    }
+    public void update(Book book, int id) {
+        jdbcTemplate.update("UPDATE book SET name=?, author_name=?, year=? WHERE id=?",
+                book.getName(), book.getAuthor_name(), book.getYear(), id);
+    }
+
+    public void save(Book book) {
+        jdbcTemplate.update("INSERT INTO book(person_id, name, author_name, year)  values (?, ?, ?, ?)", null,
+                book.getName(), book.getAuthor_name(), book.getYear());
+    }
+
+    public Optional<Person> getBookOwner(int id) {
+        return jdbcTemplate.query("SELECT person.* FROM book JOIN person ON book.person_id = person.id " +
+                        "WHERE book.id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
+                .stream().findAny();
+    }
+
+    public void release(int id) {
+        jdbcTemplate.update("UPDATE book SET person_id=NULL WHERE id=?", id);
+    }
+
+    public void assign(int id, Person person) {
+        jdbcTemplate.update("UPDATE book SET person_id=? WHERE id=?", person.getId(), id);
+    }
 }

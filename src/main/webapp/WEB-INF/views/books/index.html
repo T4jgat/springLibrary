@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
@@ -9,7 +8,8 @@
     <div th:each="book : ${books}">
         <a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getName()} + ', ' + ${book.getYear()}">book</a>
     </div>
-    <br>
-    <a href="/books/new">Add new book!</a>
+<br>
+<th>
+    <a href="/books/new">Добавить новую книгу</a>
 </body>
 </html>

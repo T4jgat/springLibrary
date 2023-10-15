@@ -7,7 +7,6 @@ public class Person {
     @NotEmpty(message = "Имя не может быть пустым")
     private String name;
     @NotNull(message = "Дата рождения обязательна!")
-//    @Pattern(regexp = "0[1-9]|1[012]", message = "Wrong format!")
     @Min(value = 1900, message = "Такие люди больше не живут!")
     @Max(value = 2023, message = "Такой год ещё не наступил!")
     private int birth_year;
