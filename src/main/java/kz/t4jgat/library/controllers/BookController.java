@@ -34,8 +34,9 @@ public class BookController {
     // ======== Controllers =============
     @GetMapping
     public String index(Model model, @RequestParam("page") int page,
-                        @RequestParam("books_per_page") int booksPerPage) {
-        List<Book> books = bookService.findAll(page, booksPerPage);
+                        @RequestParam("books_per_page") int booksPerPage,
+                        @RequestParam("sort_by") String sort) {
+        List<Book> books = bookService.findAll(page, booksPerPage, sort);
         model.addAttribute("books", books);
         return "books/index";
     }
@@ -98,5 +99,17 @@ public class BookController {
     public String assign(@PathVariable("id") int bookId, @ModelAttribute("person") Person selectedPerson) {
         bookService.updateOwner(selectedPerson, bookId);
         return "redirect:/books/" + bookId;
+    }
+
+    @GetMapping("/search")
+    public String searchByName(@RequestParam(value = "title", required = false) String title, Model model) {
+        List<Book> foundedBooks = bookService.findByTitleStartsWith(title);
+        System.out.println("is empty?: " + foundedBooks.isEmpty());
+        for (Book book : foundedBooks) {
+            System.out.println("===========");
+            System.out.println(book.getTitle());
+        }
+        model.addAttribute("foundedBooks", foundedBooks);
+        return "books/search";
     }
 }
