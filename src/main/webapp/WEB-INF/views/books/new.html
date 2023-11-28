@@ -6,8 +6,8 @@
 </head>
 <body>
 <form th:method="POST" th:object="${book}" th:action="@{/books}">
-    <label for="name">Название: </label>
-    <input type="text" id="name" th:field="*{name}"/>
+    <label for="title">Название: </label>
+    <input type="text" id="title" th:field="*{title}"/>
     <br>
     <label for="author_name">Имя автора: </label>
     <input type="text" id="author_name" th:field="*{author_name}"/>

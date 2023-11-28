@@ -3,10 +3,10 @@
 <!--      xmlns:th="http://thymeleaf.org">-->
 <head>
     <meta charset="UTF-8">
-    <title th:text="${book.getName()}" ></title>
+    <title th:text="${book.getTitle()}" ></title>
 </head>
 <body>
-    <p th:text="${book.getName()}"></p>
+    <p th:text="${book.getTitle()}"></p>
     <p th:text="${book.getAuthor_name()}"></p>
     <p th:text="${book.getYear()}"></p>
 
@@ -26,7 +26,7 @@
             <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getName()}">
             </option>
         </select>
-        <input type="submit" value="Назначиьт книгу">
+        <input type="submit" value="Назначить книгу">
     </form>
 </div>
     <hr>
