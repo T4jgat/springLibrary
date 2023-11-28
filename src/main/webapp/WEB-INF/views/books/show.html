@@ -12,6 +12,7 @@
 
 <div th:if="${owner}">
     <span>Книга сейчас у: </span> <span th:text="${owner.getName()}">Person name</span>
+    <span th:if="${book.isOverdue()}" style="color:red">  (Книга просрочена)</span>
 
     <form th:method="PATCH" th:action="@{/books/{id}/release (id=${book.getId()})}">
         <input type="submit" value="Освободить книгу">
