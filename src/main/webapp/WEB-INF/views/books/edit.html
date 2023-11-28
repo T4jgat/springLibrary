@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="Edit + ' ' + ${book.getName()}"></title>
+    <title th:text="Edit + ' ' + ${book.getTitle()}"></title>
 </head>
 <body>
 <form th:method="PATCH" th:object="${book}" th:action="@{/books/{id}(id=${book.getId()})}">
     <label for="name">Название: </label>
-    <input type="text" id="name" th:field="*{name}"/>
+    <input type="text" id="name" th:field="*{title}"/>
     <br>
     <label for="author_name">Имя автора: </label>
     <input type="text" id="author_name" th:field="*{author_name}"/>
