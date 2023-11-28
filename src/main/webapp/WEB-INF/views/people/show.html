@@ -16,7 +16,8 @@
     <div th:if="${not #lists.isEmpty(books)}" >
         <b>Книги:</b>
         <div th:each="book, iter : ${books}">
-            <p th:text="${iter.count} + '. ' + ${book.getTitle()}"></p>
+            <p th:if="${book.isOverdue()}" style="color: red" th:text="${iter.count} + '. ' + ${book.getTitle()}"></p>
+            <p th:if="${not book.isOverdue()}" th:text="${iter.count} + '.. ' + ${book.getTitle()}"></p>
         </div>
     </div>
     <hr>

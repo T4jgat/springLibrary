@@ -5,9 +5,11 @@ import kz.t4jgat.library.models.Book;
 import kz.t4jgat.library.models.Person;
 import kz.t4jgat.library.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,8 +22,8 @@ public class BookService {
         this.booksRepository = booksRepository;
     }
 
-    public List<Book> findAll() {
-        return booksRepository.findAll();
+    public List<Book> findAll(int page, int booksPerPage) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
     }
 
     public Book findOne(int id) {
@@ -48,6 +50,7 @@ public class BookService {
     public void updateOwner(Person person, int id) {
         Book book = booksRepository.findById(id).orElse(null);
         assert book != null;
+        book.setTakenAt(new Date());
         book.setId(id);
         book.setOwner(person);
         booksRepository.save(book);
@@ -58,8 +61,8 @@ public class BookService {
         Book book = booksRepository.findById(id).orElse(null);
         assert book != null;
         book.setOwner(null);
+        book.setTakenAt(null);
         booksRepository.save(book);
     }
-
 
 }

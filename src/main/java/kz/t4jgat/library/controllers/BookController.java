@@ -9,6 +9,7 @@ import kz.t4jgat.library.repositories.PeopleRepository;
 import kz.t4jgat.library.services.BookService;
 import kz.t4jgat.library.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,19 +33,22 @@ public class BookController {
 
     // ======== Controllers =============
     @GetMapping
-    public String index(Model model) {
-        List<Book> books = bookService.findAll();
+    public String index(Model model, @RequestParam("page") int page,
+                        @RequestParam("books_per_page") int booksPerPage) {
+        List<Book> books = bookService.findAll(page, booksPerPage);
         model.addAttribute("books", books);
         return "books/index";
     }
 
     @GetMapping("{id}")
-    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
+    public String show(@PathVariable("id") int id, Model model,
+                       @ModelAttribute("person") Person person) {
         Book book = bookService.findOne(id);
         model.addAttribute("book", book);
 
         assert book != null;
         Person bookOwner = book.getOwner();
+
 
         if (bookOwner!=null) {
             model.addAttribute("owner", bookOwner);

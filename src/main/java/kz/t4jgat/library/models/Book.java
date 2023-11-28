@@ -1,6 +1,9 @@
 package kz.t4jgat.library.models;
 
 import jakarta.persistence.*;
+import jdk.jfr.Timestamp;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "book")
@@ -19,9 +22,16 @@ public class Book {
     @Column(name="year")
     private int year;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="taken_at")
+    private Date takenAt;
+
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
+
+    @Transient
+    private boolean overdue;
 
     public Book() {}
 
@@ -63,6 +73,22 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Date getTakenAt() {
+        return takenAt;
+    }
+
+    public void setTakenAt(Date takenAt) {
+        this.takenAt = takenAt;
+    }
+
+    public boolean isOverdue() {
+        return overdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        this.overdue = overdue;
     }
 
     public Person getOwner() {

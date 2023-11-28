@@ -8,6 +8,7 @@ import org.springframework.data.repository.cdi.Eager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,8 +31,12 @@ public class PeopleService {
         Person person = peopleRepository.findById(id).orElse(null);
         assert person != null;
         List<Book> books = person.getBooks();
-        return person;
 
+        if (books!=null) {
+            for (Book book : books)
+                book.setOverdue(checkOverdue(book));
+        }
+        return person;
     }
 
     @Transactional
@@ -48,5 +53,13 @@ public class PeopleService {
     @Transactional
     public void delete(int id) {
         peopleRepository.deleteById(id);
+    }
+
+    boolean checkOverdue(Book book) {
+        Date takenAt = book.getTakenAt();
+        Date currentTimestamp = new Date();
+        long timeDiffInMilliseconds = Math.abs(currentTimestamp.getTime() - takenAt.getTime());
+        long timeDiffInDays = timeDiffInMilliseconds / (1000 * 60 * 60 * 24);
+        return timeDiffInDays >= 10;
     }
 }
