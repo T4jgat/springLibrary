@@ -6,6 +6,7 @@ import kz.t4jgat.library.models.Person;
 import kz.t4jgat.library.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +23,8 @@ public class BookService {
         this.booksRepository = booksRepository;
     }
 
-    public List<Book> findAll(int page, int booksPerPage) {
-        return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
+    public List<Book> findAll(int page, int booksPerPage, String sort) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by(sort))).getContent();
     }
 
     public Book findOne(int id) {
@@ -63,6 +64,10 @@ public class BookService {
         book.setOwner(null);
         book.setTakenAt(null);
         booksRepository.save(book);
+    }
+
+    public List<Book> findByTitleStartsWith(String title) {
+        return booksRepository.findBookByTitleStartingWith(title);
     }
 
 }
